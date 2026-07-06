@@ -1,0 +1,16 @@
+{
+  "name": "product-description-generator",
+  "version": "1.0.0",
+  "description": "写真から売れる商品説明を作るWebアプリ",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["product", "description", "mercari", "photo"],
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}

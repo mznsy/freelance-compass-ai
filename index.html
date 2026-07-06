@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>フリーランスコンパスAI</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header__badge">AI × フリーランス支援</div>
+      <h1 class="header__title">フリーランスコンパスAI</h1>
+      <p class="header__lead">
+      案件獲得・売り上げアップ・SNS運用まで。
+      AIがあなた専属のフリーランスコーチとして毎日の行動をサポートします。
+      </p>
+    </header>
+
+    <main class="main">
+      <section class="card card--upload" aria-labelledby="upload-heading">
+        <h2 id="upload-heading" class="card__title">
+          <span class="step">1</span>
+          現在のお悩みを入力
+        </h2>
+        <p class="card__hint">今困っていることや目標を書いてください。</p>
+
+        <div
+          id="dropzone"
+          class="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="写真をアップロード"
+        >
+          <input
+            type="file"
+            id="file-input"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            multiple
+            hidden
+          >
+          <div class="dropzone__icon" aria-hidden="true">📷</div>
+          <p class="dropzone__text">ここに写真をドロップ</p>
+          <p class="dropzone__sub">またはクリックしてファイルを選択</p>
+        </div>
+
+        <div id="preview-grid" class="preview-grid" hidden></div>
+      </section>
+
+      <section class="card" aria-labelledby="details-heading">
+        <h2 id="details-heading" class="card__title">
+          <span class="step">2</span>
+          商品の情報を入力
+        </h2>
+
+        <form id="product-form" class="form">
+          <div class="form__row">
+            <label class="form__label" for="product-name">
+              商品名 <span class="optional">（わかれば）</span>
+            </label>
+            <input
+              type="text"
+              id="product-name"
+              class="form__input"
+              placeholder="例：ユニクロ ダウンジャケット"
+              maxlength="100"
+            >
+          </div>
+
+          <div class="form__row form__row--2col">
+            <div>
+              <label class="form__label" for="category">カテゴリ</label>
+              <select id="category" class="form__select">
+                <option value="fashion">ファッション・服</option>
+                <option value="electronics">家電・ガジェット</option>
+                <option value="furniture">家具・インテリア</option>
+                <option value="books">本・漫画</option>
+                <option value="toys">おもちゃ・ゲーム</option>
+                <option value="beauty">コスメ・美容</option>
+                <option value="sports">スポーツ・アウトドア</option>
+                <option value="other">その他</option>
+              </select>
+            </div>
+            <div>
+              <label class="form__label" for="platform">出品先</label>
+              <select id="platform" class="form__select">
+                <option value="mercari">メルカリ</option>
+                <option value="rakuma">ラクマ</option>
+                <option value="yahoo">Yahoo!フリマ</option>
+                <option value="general">汎用</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form__row form__row--2col">
+            <div>
+              <label class="form__label" for="condition">商品の状態</label>
+              <select id="condition" class="form__select">
+                <option value="new">新品・未使用</option>
+                <option value="like-new">未使用に近い</option>
+                <option value="good" selected>目立った傷や汚れなし</option>
+                <option value="fair">やや傷や汚れあり</option>
+                <option value="poor">傷や汚れあり</option>
+              </select>
+            </div>
+            <div>
+              <label class="form__label" for="tone">文章のトーン</label>
+              <select id="tone" class="form__select">
+                <option value="friendly">親しみやすい</option>
+                <option value="polite">丁寧・上品</option>
+                <option value="casual">カジュアル</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form__row">
+            <label class="form__label" for="features">
+              補足情報 <span class="optional">（任意）</span>
+            </label>
+            <textarea
+              id="features"
+              class="form__textarea"
+              rows="3"
+              placeholder="例：サイズM、2024年購入、数回着用、付属品あり など"
+              maxlength="500"
+            ></textarea>
+          </div>
+
+          <button type="submit" id="generate-btn" class="btn btn--primary" disabled>
+            <span class="btn__label">AIに相談する</span>
+            <span class="btn__spinner" hidden aria-hidden="true"></span>
+          </button>
+        </form>
+      </section>
+
+      <section id="result-section" class="card card--result" hidden aria-labelledby="result-heading">
+        <h2 id="result-heading" class="card__title">
+          <span class="step">3</span>
+          AIからのアドバイス
+        </h2>
+
+        <div id="mode-badge" class="mode-badge" hidden></div>
+
+        <article class="result-block">
+          <div class="result-block__header">
+            <h3 class="result-block__label">タイトル</h3>
+            <button type="button" class="btn btn--ghost btn--copy" data-copy="title">
+              コピー
+            </button>
+          </div>
+          <p id="result-title" class="result-block__content result-block__content--title"></p>
+        </article>
+
+        <article class="result-block">
+          <div class="result-block__header">
+            <h3 class="result-block__label">商品説明</h3>
+            <button type="button" class="btn btn--ghost btn--copy" data-copy="description">
+              コピー
+            </button>
+          </div>
+          <div id="result-description" class="result-block__content result-block__content--description"></div>
+        </article>
+
+        <article class="result-block">
+          <div class="result-block__header">
+            <h3 class="result-block__label">おすすめハッシュタグ</h3>
+            <button type="button" class="btn btn--ghost btn--copy" data-copy="hashtags">
+              コピー
+            </button>
+          </div>
+          <p id="result-hashtags" class="result-block__content result-block__content--hashtags"></p>
+        </article>
+
+        <button type="button" id="copy-all-btn" class="btn btn--secondary">
+          すべてコピー
+        </button>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>写真はサーバーに保存されません。AIモードを使う場合は OpenAI API キーが必要です。</p>
+      <p class="footer__link">
+        <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">
+          OpenAI API キーの取得方法
+        </a>
+      </p>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
