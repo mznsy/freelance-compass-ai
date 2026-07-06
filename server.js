@@ -209,24 +209,7 @@ app.post("/api/generate", async (req, res) => {
       return res.status(400).json({ error: "写真を1枚以上アップロードしてください" });
     }
 
-    const {
-
-  images,
-
-  productName,
-
-  category,
-
-  platform,
-
-  condition,
-
-  tone,
-
-  features,
-
-} = req.body;
-
+ 
 const params = {
 
   images,
@@ -244,15 +227,7 @@ const params = {
   features,
 
 };
-    const params = {
-
-  message,
-
-  level,
-
-  goal,
-
-}
+   
     let result;
     if (OPENAI_API_KEY) {
       result = await generateWithAI(params);
