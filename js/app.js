@@ -170,14 +170,28 @@ dropzone.addEventListener("drop", (e) => {
   }
 });
 
-productForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  if (state.images.length ===const MAX_IMAGES = 5;
+const MAX_IMAGES = 5;
+
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 const state = {
+
   images: [],
+
 };
+
+productForm.addEventListener("submit", async (e) => {
+
+  e.preventDefault();
+
+  if (state.images.length === 0) {
+
+    alert("写真を選択してください");
+
+    return;
+
+  }
+}
 
 const dropzone = document.getElementById("dropzone");
 const fileInput = document.getElementById("file-input");
@@ -188,7 +202,7 @@ const resultSection = document.getElementById("result-section");
 const modeBadge = document.getElementById("mode-badge");
 const resultTitle = document.getElementById("result-title");
 const resultDescription = document.getElementById("result-description");
-const resultHashtags = doc 0) return;
+const resultHashtags =  document.getElementById("result-hashtags")s
 
   setLoading(true);
 
